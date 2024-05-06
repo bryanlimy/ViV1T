@@ -1,4 +1,4 @@
-# ViV1T: dynamic mouse V1 response predicting using a factorized spatiotemporal Transformer
+# ViV1T: dynamic mouse V1 response prediction using a factorized spatiotemporal Transformer
 
 Codebase for the ViV1T (team `dunedin`) submission in the [NeurIPS Sensorium 2023 challenge](https://www.sensorium-competition.net/) which came 🥉 place.
 
