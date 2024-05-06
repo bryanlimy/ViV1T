@@ -54,6 +54,7 @@ Create conda envrionment `viv1t` in Python 3.11, install [PyTorch](https://pytor
 conda create -n viv1t python=3.11
 conda activate viv1t
 pip install torch==2.1 torchvision torchaudio
+# conda install pytorch=2.1 torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
 pip install -e .
 ```
 
@@ -63,12 +64,12 @@ pip install -e .
 
 ## Train model
 - The following command train the ViV1T core and Gaussian2d readout model on all 10 mice and save results to `--output_dir=runs/vivit/test`:
-  ```
-  > python train.py --data=data/sensorium --output_dir=runs/vivit/test --transform_mode=2 --crop_frame=140 --ds_mode=3 --core=vivit --core_parallel_attention --grad_checkpointing=0 --output_mode=1 --readout=gaussian2d --batch_size=6 --clear_output_dir
+  ```bash
+  python train.py --data=data/sensorium --output_dir=runs/vivit/test --transform_mode=2 --crop_frame=140 --ds_mode=3 --core=vivit --core_parallel_attention --grad_checkpointing=0 --output_mode=1 --readout=gaussian2d --batch_size=6 --clear_output_dir
   ```
 - Training progress will be printed in the console and also recorded in `<output_dir>/output.log` and model checkpoint is saved periodically in `<output_dir>/ckpt/model_stat.pt`.
 - Check `--help` for all available arguments
-  ```
+  ```bash
   > python train.py --help
 
   usage: train.py [-h] [--data DATA] --output_dir OUTPUT_DIR --ds_mode {0,1,2,3} [--stat_mode {0,1}] --transform_mode
