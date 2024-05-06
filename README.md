@@ -14,7 +14,7 @@ We sincerely thank [Turishcheva et al.](https://arxiv.org/abs/2305.19654) for or
 The codebase repository has the following structure. 
 - Check [data/README.md](data/README.md) for more information about the dataset and how to store them.
 - [runs/](runs/) contains model checkpoints and their training logs.
-  - You can download the model checkpoints used in the Sensorium 2023 challenge at [TODO-ADD-URL]().
+  - You can download the 5 model checkpoints used for our submission in the Sensorium 2023 challenge at [huggingface.co/bryanlimy/ViV1T](https://huggingface.co/bryanlimy/ViV1T).
 ```
 .
 ├── LICENSE
@@ -38,11 +38,17 @@ The codebase repository has the following structure.
 ├── pyproject.toml
 ├── requirements.txt
 ├── runs
-│   ├── 001
-│   ├── 002
-│   ├── 003
-│   ├── 004
-│   └── 005
+│   ├── viv1t_001
+│   │   ├── args.yaml
+│   │   ├── ckpt
+│   │   │   └── model_state.pt
+│   │   ├── evaluation.yaml
+│   │   ├── model.txt
+│   │   └── output.log
+│   ├── viv1t_002
+│   ├── viv1t_003
+│   ├── viv1t_004
+│   └── viv1t_005
 ├── src
 │   └── viv1t
 │       ├── __init__.py
