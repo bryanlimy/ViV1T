@@ -1,0 +1,16 @@
+tqdm
+h5py
+scipy
+wandb
+einops
+pandas
+pyarrow
+seaborn
+jupyter
+torchinfo
+matplotlib
+ruamel.yaml
+oauth2client
+scikit-image
+scikit-learn
+opencv-python
