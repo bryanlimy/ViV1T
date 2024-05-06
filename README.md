@@ -13,39 +13,81 @@ We sincerely thank [Turishcheva et al.](https://arxiv.org/abs/2305.19654) for or
 ## File structure
 The codebase repository has the following structure. 
 - Check [data/README.md](data/README.md) for more information about the dataset and how to store them.
-- Check [.gitignore](.gitignore) for the ignored files.
+- [runs/](runs/) contains model checkpoints and their training logs.
+  - You can download the model checkpoints used in the Sensorium 2023 challenge at [TODO-ADD-URL]().
 ```
-ViV1T/
-  assets/
-  data/
-    sensorium/
-      dynamic29156-11-10-Video-8744edeac3b4d1ce16b680916b5267ce.zip
-      dynamic29228-2-10-Video-8744edeac3b4d1ce16b680916b5267ce.zip
-      ...
-    README.md
-  runs/
-    vivit_ensembe/
-      002/
-        ckpt/
-          model_stat.pt
-        args.yaml
-        evaluation.yaml
-        model.txt
-        output.log
-      009/
-      012/
-      015/
-      028/
-  src/
-    sensorium/
-      ...
-  .gitignore
-  demo.ipynb
-  LICENSE
-  pyproject.toml
-  README.md
-  requirements.txt
-  train.py
+.
+├── LICENSE
+├── README.md
+├── assets
+│   └── viv1t.jpg
+├── data
+│   ├── README.md
+│   └── sensorium
+│       ├── dynamic29156-11-10-Video-8744edeac3b4d1ce16b680916b5267ce
+│       ├── dynamic29228-2-10-Video-8744edeac3b4d1ce16b680916b5267ce
+│       ├── dynamic29234-6-9-Video-8744edeac3b4d1ce16b680916b5267ce
+│       ├── dynamic29513-3-5-Video-8744edeac3b4d1ce16b680916b5267ce
+│       ├── dynamic29514-2-9-Video-8744edeac3b4d1ce16b680916b5267ce
+│       ├── dynamic29515-10-12-Video-9b4f6a1a067fe51e15306b9628efea20
+│       ├── dynamic29623-4-9-Video-9b4f6a1a067fe51e15306b9628efea20
+│       ├── dynamic29647-19-8-Video-9b4f6a1a067fe51e15306b9628efea20
+│       ├── dynamic29712-5-9-Video-9b4f6a1a067fe51e15306b9628efea20
+│       └── dynamic29755-2-8-Video-9b4f6a1a067fe51e15306b9628efea20
+├── demo.ipynb
+├── pyproject.toml
+├── requirements.txt
+├── runs
+│   ├── 001
+│   ├── 002
+│   ├── 003
+│   ├── 004
+│   └── 005
+├── src
+│   └── viv1t
+│       ├── __init__.py
+│       ├── criterions.py
+│       ├── data
+│       │   ├── __init__.py
+│       │   ├── constants.py
+│       │   ├── cycle_ds.py
+│       │   ├── data.py
+│       │   ├── statistics.py
+│       │   └── utils.py
+│       ├── metrics.py
+│       ├── model
+│       │   ├── __init__.py
+│       │   ├── core
+│       │   │   ├── __init__.py
+│       │   │   ├── core.py
+│       │   │   ├── factorized_baseline.py
+│       │   │   └── vivit.py
+│       │   ├── critic.py
+│       │   ├── helper.py
+│       │   ├── model.py
+│       │   ├── modulators
+│       │   │   ├── __init__.py
+│       │   │   ├── gru.py
+│       │   │   ├── mlp.py
+│       │   │   ├── mlp_v2.py
+│       │   │   ├── mlp_v3.py
+│       │   │   └── modulator.py
+│       │   ├── readout
+│       │   │   ├── __init__.py
+│       │   │   ├── factorized.py
+│       │   │   ├── gaussian2d.py
+│       │   │   ├── random.py
+│       │   │   └── readout.py
+│       │   └── shifter.py
+│       ├── scheduler.py
+│       └── utils
+│           ├── __init__.py
+│           ├── bufferdict.py
+│           ├── estimate_batch_size.py
+│           ├── logger.py
+│           ├── utils.py
+│           └── yaml.py
+└── train.py
 ```
 
 ## Installation

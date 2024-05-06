@@ -1,12 +1,31 @@
 ## File structure
 
+Please download and store the dataset in the following structure. Our code automatically unzip the zip files if folder of the same name does not exist. Also note that, as part of the data preprocessing step, we recompute the statistics of the data from the training set and stored them under `<mouse_dir>/statistics.pkl`.
 ```
-data/
-  sensorium/
-    dynamic29156-11-10-Video-8744edeac3b4d1ce16b680916b5267ce.zip
-    dynamic29228-2-10-Video-8744edeac3b4d1ce16b680916b5267ce.zip
-    ...
-  README.md
+.
+├── README.md
+└── sensorium
+    ├── dynamic29156-11-10-Video-8744edeac3b4d1ce16b680916b5267ce
+    │   ├── config.json
+    │   ├── data
+    │   │   ├── behavior
+    │   │   ├── pupil_center
+    │   │   ├── responses
+    │   │   └── videos
+    │   ├── meta
+    │   │   ├── neurons
+    │   │   ├── statistics
+    │   │   └── trials
+    │   └── statistics.pkl
+    ├── dynamic29228-2-10-Video-8744edeac3b4d1ce16b680916b5267ce
+    ├── dynamic29234-6-9-Video-8744edeac3b4d1ce16b680916b5267ce
+    ├── dynamic29513-3-5-Video-8744edeac3b4d1ce16b680916b5267ce
+    ├── dynamic29514-2-9-Video-8744edeac3b4d1ce16b680916b5267ce
+    ├── dynamic29515-10-12-Video-9b4f6a1a067fe51e15306b9628efea20
+    ├── dynamic29623-4-9-Video-9b4f6a1a067fe51e15306b9628efea20
+    ├── dynamic29647-19-8-Video-9b4f6a1a067fe51e15306b9628efea20
+    ├── dynamic29712-5-9-Video-9b4f6a1a067fe51e15306b9628efea20
+    └── dynamic29755-2-8-Video-9b4f6a1a067fe51e15306b9628efea20
 ```
 ### Sensorium 2023 datasets
 - Original dataset [gin.g-node.org/pollytur/Sensorium2023Data](https://gin.g-node.org/pollytur/Sensorium2023Data) with Mouse A, B, C, D, E.
