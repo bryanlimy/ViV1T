@@ -116,6 +116,7 @@ pip install -e .
   python train.py --data=data/sensorium --output_dir=runs/vivit/test --transform_mode=2 --crop_frame=140 --ds_mode=3 --core=vivit --core_parallel_attention --grad_checkpointing=0 --output_mode=1 --readout=gaussian2d --batch_size=6 --clear_output_dir
   ```
 - Training progress will be printed in the console and also recorded in `<output_dir>/output.log` and model checkpoint is saved periodically in `<output_dir>/ckpt/model_stat.pt`.
+- A single Nvidia A100 40GB was used to train the model.
 - Check `--help` for all available arguments
   ```bash
   > python train.py --help
