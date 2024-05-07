@@ -6,12 +6,12 @@ Codebase for the ViV1T (team `dunedin`) submission in the [NeurIPS Sensorium 202
 
 Contributors: [Bryan M. Li](https://twitter.com/bryanlimy), [Wolf De Wulf](https://twitter.com/wolfdewulf), [Nina Kudryashova](https://twitter.com/NinelK1), [Matthias Hennig](https://twitter.com/MatthiasHennig6), [Nathalie L. Rochefort](https://twitter.com/RochefortLab), [Arno Onken](https://homepages.inf.ed.ac.uk/aonken/).
 
-## Acknowledgement
+## Acknowledgments
 
 We sincerely thank [Turishcheva et al.](https://arxiv.org/abs/2305.19654) for organizing the [Sensorium 2023 challenge](https://www.sensorium-competition.net/) and for making their high-quality large-scale mouse V1 recordings publicly available. The structure of this codebase is based on and inspired by [bryanlimy/V1T](https://github.com/bryanlimy/V1T), [ecker-lab/sensorium_2023](https://github.com/ecker-lab/sensorium_2023), [sinzlab/neuralpredictors](https://github.com/sinzlab/neuralpredictors) and [sinzlab/nnfabrik](https://github.com/sinzlab/nnfabrik). 
 
 ## File structure
-The codebase repository has the following structure. 
+The codebase repository has the following structure.
 - Check [data/README.md](data/README.md) for more information about the dataset and how to store them.
 - [runs/](runs/) contains model checkpoints and their training logs.
   - You can download the 5 model checkpoints used for our submission in the Sensorium 2023 challenge at [huggingface.co/bryanlimy/ViV1T](https://huggingface.co/bryanlimy/ViV1T).
@@ -97,7 +97,7 @@ The codebase repository has the following structure.
 ```
 
 ## Installation
-Create conda envrionment `viv1t` in Python 3.11, install [PyTorch](https://pytorch.org/get-started/locally/) 2.1 and the `viv1t` package.
+Create conda environment `viv1t` in Python 3.11, install [PyTorch](https://pytorch.org/get-started/locally/) 2.1 and the `viv1t` package.
 ```bash
 conda create -n viv1t python=3.11
 conda activate viv1t
@@ -111,12 +111,12 @@ pip install -e .
 
 
 ## Train model
-- The following command train the ViV1T core and Gaussian2d readout model on all 10 mice and save results to `--output_dir=runs/vivit/test`:
+- The following command trains the ViV1T core and Gaussian2d readout model on all 10 mice and saves results to `--output_dir=runs/vivit/test`:
   ```bash
   python train.py --data=data/sensorium --output_dir=runs/vivit/test --transform_mode=2 --crop_frame=140 --ds_mode=3 --core=vivit --core_parallel_attention --grad_checkpointing=0 --output_mode=1 --readout=gaussian2d --batch_size=6 --clear_output_dir
   ```
 - Training progress will be printed in the console and also recorded in `<output_dir>/output.log` and model checkpoint is saved periodically in `<output_dir>/ckpt/model_stat.pt`.
-- A single Nvidia A100 40GB was used to train the model.
+- A single NVIDIA A100 40GB was used to train the model.
 - Check `--help` for all available arguments
   ```bash
   > python train.py --help

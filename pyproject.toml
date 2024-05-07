@@ -8,7 +8,7 @@ version = "0.0.1"
 authors = [
   { name="Bryan M. Li", email="bryan.li@ed.ac.uk" },
 ]
-description = "Codebase for the ViV1T solution to the  Sensorium 2023 challenge."
+description = "Codebase for the ViV1T solution to the Sensorium 2023 challenge."
 readme = "README.md"
 license = { file="LICENSE" }
 requires-python = ">=3.11"
@@ -16,6 +16,15 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+keywords = [
+    "transformer",
+    "neuro-ai",
+    "sensorium2023",
+    "visual-response-prediction",
+    "sensorium",
 ]
 dynamic = ["dependencies", "optional-dependencies"]
 
