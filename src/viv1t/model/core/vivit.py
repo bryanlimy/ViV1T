@@ -16,7 +16,23 @@ from viv1t.utils.utils import support_bf16
 
 FF_ACTIVATIONS = Literal["gelu", "swiglu"]
 
+class Adapter(nn.Module):
+    def __init__(self, D_features, mlp_ratio=0.25, act_layer=nn.GELU):
+        super().__init__()
+        D_hidden_features = int(D_features * mlp_ratio)
+        self.act = act_layer()
+        self.D_fc1 = nn.Linear(D_features, D_hidden_features)
+        self.D_fc2 = nn.Linear(D_hidden_features, D_features)
+        #self.skip_connect = skip_connect  # 添加 skip_connect 参数
 
+    def forward(self, x):
+        # x is expected (BT, HW+1, D)
+        xs = self.D_fc1(x)
+        xs = self.act(xs)
+        xs = self.D_fc2(xs)
+        x = xs
+        return x
+        
 def find_shape(num_patches: int):
     dim1 = math.ceil(math.sqrt(num_patches))
     while num_patches % dim1 != 0 and dim1 > 0:
@@ -298,7 +314,7 @@ class PositionalEncodingGenerator(nn.Module):
 
     def __init__(
         self,
-        dimension: Literal["spatial", "temporal"],
+        dimension: Literal["spatial", ],
         input_shape: Tuple[int, int],
         out_channels: int,
         kernel_size: int = 3,
@@ -481,7 +497,7 @@ class BehaviorMLP(nn.Module):
 class TransformerBlock(nn.Module):
     def __init__(
         self,
-        dimension: Literal["spatial", "temporal"],
+        dimension: Literal["spatial", ],
         input_shape: Tuple[int, int],
         num_heads: int,
         head_dim: int,
@@ -500,7 +516,7 @@ class TransformerBlock(nn.Module):
         ff_activation: FF_ACTIVATIONS = "gelu",
     ):
         super(TransformerBlock, self).__init__()
-        assert dimension in ("spatial", "temporal")
+        assert dimension in ("spatial", )
         self.dimension = dimension
         emb_dim = input_shape[-1]
         self.attention = Attention(
@@ -588,7 +604,7 @@ class TransformerBlock(nn.Module):
 class ParallelTransformerBlock(nn.Module):
     def __init__(
         self,
-        dimension: Literal["spatial", "temporal"],
+        dimension: Literal["spatial", ],
         input_shape: Tuple[int, int],
         num_heads: int,
         head_dim: int,
@@ -731,7 +747,7 @@ class ParallelTransformerBlock(nn.Module):
 class Transformer(nn.Module):
     def __init__(
         self,
-        dimension: Literal["spatial", "temporal"],
+        dimension: Literal["spatial", ],
         input_shape: Tuple[int, int],
         depth: int,
         num_heads: int,
@@ -749,10 +765,10 @@ class Transformer(nn.Module):
         flash_attention: bool = True,
         normalize_qk: bool = False,
         grad_checkpointing: bool = False,
-        ff_activation: FF_ACTIVATIONS = "gelu",
+        ff_activation: FF_ACTIVATIONS = "gelu"
     ):
         super(Transformer, self).__init__()
-        assert dimension in ("spatial", "temporal")
+        assert dimension in ("spatial", )
         block = ParallelTransformerBlock if parallel_attention else TransformerBlock
         self.blocks = nn.ModuleList(
             [
@@ -778,7 +794,10 @@ class Transformer(nn.Module):
                 for i in range(depth)
             ]
         )
-
+        self.adapters = nn.ModuleList([
+            Adapter(input_shape[1], mlp_ratio=0.25, act_layer=nn.GELU)
+            for _ in range(depth)
+        ])
     def forward(
         self,
         inputs: torch.Tensor,
@@ -794,6 +813,7 @@ class Transformer(nn.Module):
                 behaviors=behaviors,
                 pupil_centers=pupil_centers,
             )
+            outputs = self.adapters[i](outputs)
         return outputs
 
 
@@ -874,7 +894,7 @@ class ViViT(nn.Module):
             ff_activation=args.core_ff_activation,
         )
         self.temporal_transformer = Transformer(
-            dimension="temporal",
+            dimension="spatial",
             input_shape=(self.tokenizer.output_shape[0], emb_dim),
             depth=args.core_temporal_depth,
             num_heads=num_heads,
@@ -1041,3 +1061,65 @@ class ViViTCore(Core):
             )
         outputs = outputs.to(torch.float32)
         return outputs
+
+@register("vit")
+class ViTCore(ViViTCore):
+    def __init__(self, args: Any, input_shape: Tuple[int, int, int, int]):
+        print(vars(args))
+        super(ViTCore, self).__init__(args, input_shape=input_shape)
+        self.input_shape = input_shape
+        self.behavior_mode = args.core_behavior_mode
+        input_shape = list(input_shape)
+        match self.behavior_mode:
+            case 0 | 3 | 4 | 5:
+                pass
+            case 1:
+                input_shape[0] += args.input_shapes["behavior"][0]
+            case 2:
+                input_shape[0] += (
+                    args.input_shapes["behavior"][0]
+                    + args.input_shapes["pupil_center"][0]
+                )
+            case _:
+                raise NotImplementedError(f"--behavior_mode {self.behavior_mode}")
+        self.vit = ViViT(args, input_shape=tuple(input_shape))
+        self.output_shape = self.vit.output_shape
+
+    def regularizer(self):
+        return self.vit.regularizer()
+
+    def forward(
+        self,
+        inputs: torch.Tensor,
+        mouse_id: str,
+        behaviors: torch.Tensor,
+        pupil_centers: torch.Tensor,
+    ):
+        b, _, t, h, w = inputs.shape
+        outputs = inputs
+        match self.behavior_mode:
+            case 1:
+                outputs = torch.concat(
+                    (outputs, repeat(behaviors, "b d t -> b d t h w", h=h, w=w)), dim=1
+                )
+            case 2:
+                outputs = torch.concat(
+                    (
+                        outputs,
+                        repeat(behaviors, "b d t -> b d t h w", h=h, w=w),
+                        repeat(pupil_centers, "b d t -> b d t h w", h=h, w=w),
+                    ),
+                    dim=1,
+                )
+        with self.autocast:
+            outputs = self.vivit(
+                outputs,
+                mouse_id=mouse_id,
+                behaviors=behaviors,
+                pupil_centers=pupil_centers,
+            )
+        outputs = outputs.to(torch.float32)
+        return outputs
+
+
+    
