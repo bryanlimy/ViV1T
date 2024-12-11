@@ -6,6 +6,18 @@ Codebase for the ViV1T (team `dunedin`) submission in the [NeurIPS Sensorium 202
 
 Contributors: [Bryan M. Li](https://twitter.com/bryanlimy), [Wolf De Wulf](https://twitter.com/wolfdewulf), [Nina Kudryashova](https://twitter.com/NinelK1), [Matthias Hennig](https://twitter.com/MatthiasHennig6), [Nathalie L. Rochefort](https://twitter.com/RochefortLab), [Arno Onken](https://homepages.inf.ed.ac.uk/aonken/).
 
+If you use this work, please consider citing:
+```
+@inproceedings{
+    turishcheva2024retrospective,
+    title={Retrospective for the Dynamic Sensorium Competition for predicting large-scale mouse primary visual cortex activity from videos},
+    author={Polina Turishcheva and Paul G. Fahey and Michaela Vystr{\v{c}}ilov{\'a} and Laura Hansel and Rachel E Froebe and Kayla Ponder and Yongrong Qiu and Konstantin Friedrich Willeke and Mohammad Bashiri and Ruslan Baikulov and Yu Zhu and Lei Ma and Shan Yu and Tiejun Huang and Bryan M. Li and Wolf De Wulf and Nina Kudryashova and Matthias H. Hennig and Nathalie Rochefort and Arno Onken and Eric Wang and Zhiwei Ding and Andreas S. Tolias and Fabian H. Sinz and Alexander S Ecker},
+    booktitle={The Thirty-eight Conference on Neural Information Processing Systems Datasets and Benchmarks Track},
+    year={2024},
+    url={https://openreview.net/forum?id=gViJjwRUlM}
+}
+```
+
 ## Acknowledgments
 
 We sincerely thank [Turishcheva et al.](https://arxiv.org/abs/2305.19654) for organizing the [Sensorium 2023 challenge](https://www.sensorium-competition.net/) and for making their high-quality large-scale mouse V1 recordings publicly available. The structure of this codebase is based on and inspired by [bryanlimy/V1T](https://github.com/bryanlimy/V1T), [ecker-lab/sensorium_2023](https://github.com/ecker-lab/sensorium_2023), [sinzlab/neuralpredictors](https://github.com/sinzlab/neuralpredictors) and [sinzlab/nnfabrik](https://github.com/sinzlab/nnfabrik). 
