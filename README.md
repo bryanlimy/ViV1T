@@ -2,6 +2,8 @@
 
 Codebase for the ViV1T (team `dunedin`) submission in the [NeurIPS Sensorium 2023 challenge](https://www.sensorium-competition.net/) which came 🥉 place.
 
+#### :exclamation: Checkout a new version of the codebase where we significantly improved the prediction performance and also performed semi-closed-loop _in vivo_ experiments: [github.com/bryanlimy/ViV1T-closed-loop](https://github.com/bryanlimy/ViV1T-closed-loop). :exclamation:
+
 ![ViV1T architecture](assets/viv1t.jpg)
 
 Contributors: [Bryan M. Li](https://twitter.com/bryanlimy), [Wolf De Wulf](https://twitter.com/wolfdewulf), [Nina Kudryashova](https://twitter.com/NinelK1), [Matthias Hennig](https://twitter.com/MatthiasHennig6), [Nathalie L. Rochefort](https://twitter.com/RochefortLab), [Arno Onken](https://homepages.inf.ed.ac.uk/aonken/).
